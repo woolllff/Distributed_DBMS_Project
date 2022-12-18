@@ -1,0 +1,56 @@
+pipeline {
+    // environment {
+    // registry = "woolllff/databaseapp" 
+    // registryCredential = 'dockerhub_id' 
+    // dockerImage = '' 
+    // }
+    agent any
+
+    stages {
+        stage('Test'){
+            steps{
+                git branch: 'main', changelog: false, credentialsId: 'github_id', poll: false, url: 'https://github.com/woolllff/Distributed_DBMS_Project.git'
+                bat 'python tests.py'
+
+            }
+        }
+        // stage('Build Docker'){
+        //     steps{
+        //         script { 
+        //         dockerImage = docker.build registry + ":latest" 
+        //         }
+        //     }
+        // }
+        // stage('Push Docker Image'){
+        //     steps{
+        //         script { 
+        //             docker.withRegistry( '', registryCredential ) {
+        //                 dockerImage.push()
+        //             }
+        //         } 
+        //     }
+        // }
+        // stage('Cleaning up') { 
+        //     steps { 
+        //         bat "docker rmi $registry:latest" 
+        //     }
+        // }
+
+        // stage("Ansible Setup") {
+        //      steps {
+        //         dir('./ansible'){
+        //             script{
+        //                 def ansibleImage = docker.build("ansibleimage")
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('Ansible Deploy')
+        // {
+        //     steps 
+        //         {
+        //           bat "docker run --name ansible ansibleimage:latest"    
+        //         }
+        // }
+    }
+}
