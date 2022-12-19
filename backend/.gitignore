@@ -2,6 +2,7 @@
 /backend/__pycache__
 /mainApp/__pycache__
 /users/__pycache__
+/mainApp/utilities/__pycache__
 
 # all the migrations
 /mainApp/migrations
