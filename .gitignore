@@ -2,3 +2,5 @@
 /jenkins.war
 
 
+# venv 
+/env
