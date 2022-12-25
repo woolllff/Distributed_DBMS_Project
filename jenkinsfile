@@ -1,26 +1,22 @@
 pipeline {
-    // environment {
-    // registry = "woolllff/databaseapp" 
-    // registryCredential = 'dockerhub_id' 
-    // dockerImage = '' 
-    // }
+    environment {
+    registry = "woolllff/DDBMS_APP" 
+    registryCredential = 'dockerhub_id' 
+    dockerImage = '' 
+    }
     agent any
 
     stages {
-        stage('Test'){
+        stage('Checkout'){
             steps{
-                git branch: 'main', changelog: false, credentialsId: 'github_id', poll: false, url: 'https://github.com/woolllff/Distributed_DBMS_Project.git'
-                bat 'python tests.py'
-
+                git branch: 'master', changelog: false, credentialsId: 'github_id', poll: false, url: 'https://github.com/woolllff/Distributed_DBMS_Project'
             }
         }
-        // stage('Build Docker'){
-        //     steps{
-        //         script { 
-        //         dockerImage = docker.build registry + ":latest" 
-        //         }
-        //     }
-        // }
+        stage('Build Docker'){
+            steps{
+                bat 'docker-compose build '
+            }
+        }
         // stage('Push Docker Image'){
         //     steps{
         //         script { 

@@ -1,0 +1,12 @@
+FROM mysql/mysql-server
+
+
+ENV MYSQL_ROOT_PASSWORD="qwerty"
+ENV MYSQL_USER="user"
+ENV MYSQL_PASSWORD="pass"
+
+COPY ./scripts/ /docker-entrypoint-initdb.d/
+
+
+EXPOSE 3306
+

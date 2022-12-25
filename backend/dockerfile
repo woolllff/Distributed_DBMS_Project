@@ -1,0 +1,27 @@
+FROM python:latest
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+RUN mkdir app
+COPY . ./app
+WORKDIR /app
+
+
+RUN cd /app
+RUN pip install -r requirements.txt
+
+
+RUN python3 manage.py makemigrations
+RUN python3 manage.py makemigrations mainApp
+
+
+EXPOSE 8000
+# EXPOSE 3306
+# EXPOSE 80
+
+ENTRYPOINT ["python3" ,"manage.py", "runserver", "0.0.0.0:8000"] 
+# ENTRYPOINT [ "python" ]
+
+#CMD ["python3" ,"./manage.py", "runserver"]
+#netstat -punta | grep 8000

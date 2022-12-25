@@ -1,0 +1,2 @@
+-- drop database testdb1;
+-- drop database testdb2;

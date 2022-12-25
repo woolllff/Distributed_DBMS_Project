@@ -14,6 +14,9 @@ import { Input } from '@chakra-ui/react'
 import axios from 'axios';
 import { formToJSON } from 'axios';
 
+const backend_url = process.env.REACT_APP_BACKEND_URL
+
+
 export default class GlobalSchemaMaker extends Component {
 
     constructor(props) {
@@ -34,7 +37,8 @@ export default class GlobalSchemaMaker extends Component {
         axios({
             method: 'GET',
             headers: { 'content-type': 'application/json' },
-            url: "http://localhost:8000/mainApp/LocalSchema",
+            url: backend_url + "/mainApp/LocalSchema" ,
+            // url:   "http://localhost:8000/mainApp/LocalSchema",
         }).then((res) => {
             // console.log(res)
             var prevState = this.state;
@@ -80,7 +84,8 @@ export default class GlobalSchemaMaker extends Component {
                 "schemaName": this.state.schemaName,
                 "localSchemas": JSON.stringify(this.state.localSchemas)
             }),
-            url: "http://localhost:8000/mainApp/GlobalSchema",
+            url: backend_url + "/mainApp/GlobalSchema",
+            // url: "http://localhost:8000/mainApp/GlobalSchema",
         }).then((res) => {
             console.log(res)
         });

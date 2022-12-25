@@ -3,12 +3,13 @@ import pymysql
 
 
 class LocalSchema:
-    def __init__(self, serverIP, serverUser, serverUserPwd, dbName) -> None:
+    def __init__(self, serverIP, serverPort, serverUser, serverUserPwd, dbName) -> None:
         self.schema = {}
         characterSet = "utf8mb4"
         cursorType = pymysql.cursors.DictCursor
 
         self.schema["serverIP"] = serverIP
+        self.schema["serverPort"] = serverPort
         self.schema["serverUser"] = serverUser
         self.schema["serverUserPwd"] = serverUserPwd
         self.schema["characterSet"] = characterSet
@@ -86,7 +87,7 @@ class LocalSchema:
 
     def connect(self):
         self.mySQLConnection = pymysql.connect(
-            host=self.schema["serverIP"], user=self.schema["serverUser"], password=self.schema["serverUserPwd"], db=self.schema["dbName"], charset=self.schema["characterSet"], cursorclass=self.schema["cursorType"])
+            host=self.schema["serverIP"], port=self.schema["serverPort"] , user=self.schema["serverUser"], password=self.schema["serverUserPwd"], db=self.schema["dbName"], charset=self.schema["characterSet"], cursorclass=self.schema["cursorType"])
 
         # end connect
 

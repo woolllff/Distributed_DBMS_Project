@@ -13,10 +13,10 @@ class GlobalSchema:
         self.interDBkeys = {}
         # end init 
 
-    def addLocalSchema(self,ls,servIP,servUser,servPass,dbname):
-        l = LocalSchema(servIP,servUser,servPass,dbname)
+    def addLocalSchema(self,ls,servIP,servPort,servUser,servPass,dbname):
+        l = LocalSchema(servIP,servPort,servUser,servPass,dbname)
 
-        self.localSchemas.append((ls,servIP,servUser,servPass,dbname))
+        self.localSchemas.append((ls,servIP,servPort,servUser,servPass,dbname))
         
         for t in l.schema["tables"]:
             self.add_table("{}.{}".format(l.schema["dbName"],t))
@@ -45,13 +45,13 @@ class GlobalSchema:
         
 
 
-    def updateLocalSchema(self,ls,servIP,servUser,servPass,dbname):
+    def updateLocalSchema(self,ls,servIP,servPort,servUser,servPass,dbname):
         
         for i in self.localSchemas:
             if(i[0] == ls):
                 self.localSchemas.remove(i)
         
-        self.addLocalSchema(ls,servIP,servUser,servPass,dbname)
+        self.addLocalSchema(ls,servIP,servPort,servUser,servPass,dbname)
 
 
 

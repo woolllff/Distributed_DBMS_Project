@@ -1,0 +1,11 @@
+
+#database 
+/db.sqlite3
+
+
+# docker file
+/dockerfile
+/.dockerignore
+
+# all the migrations
+/mainApp/migrations

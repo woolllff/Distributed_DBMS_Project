@@ -4,3 +4,7 @@
 
 # venv 
 /env
+
+
+# docker commands 
+/dockercommands.txt

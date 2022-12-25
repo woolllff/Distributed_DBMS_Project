@@ -9,3 +9,7 @@
 
 # auto generated db 
 /db.sqlite3
+
+# enviroment 
+# /.env
+

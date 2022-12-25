@@ -13,6 +13,8 @@ import { Button } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import axios from 'axios';
 
+const backend_url = process.env.REACT_APP_BACKEND_URL
+
 
 export default class LocalSchemaRemover extends Component {
 
@@ -33,7 +35,8 @@ export default class LocalSchemaRemover extends Component {
         axios({
             method: 'GET',
             headers: { 'content-type': 'application/json' },
-            url: "http://localhost:8000/mainApp/LocalSchema",
+            url : backend_url + "/mainApp/LocalSchema",
+            // url: "http://localhost:8000/mainApp/LocalSchema",
         }).then((res) => {
             
             // console.log(res)
@@ -65,7 +68,8 @@ export default class LocalSchemaRemover extends Component {
             data: JSON.stringify({
                 "id": this.state.id
             }),
-            url: "http://localhost:8000/mainApp/LocalSchema",
+            url : backend_url + "/mainApp/LocalSchema",
+            // url: "http://localhost:8000/mainApp/LocalSchema",
         }).then((res) => {
             console.log(res)
         });

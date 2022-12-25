@@ -10,6 +10,9 @@ import { Button } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import axios from 'axios';
 
+const backend_url = process.env.REACT_APP_BACKEND_URL
+
+
 export default class LocalSchemaMaker extends Component {
 
     constructor(props) {
@@ -17,6 +20,7 @@ export default class LocalSchemaMaker extends Component {
         this.state = {
             dbName: "",
             serverIP: "",
+            serverPort: "3306",
             serverUser: "",
             serverPass: "",
             schemaName: "",
@@ -25,17 +29,20 @@ export default class LocalSchemaMaker extends Component {
 
         this.localSchemasAvalable = []
 
-
-        this.dataTypes = ["Text", "Numbers"]
-        this.constraints = ["NOT NULL", " Check  ", "Default", "Unique", "PK", "FOREIGN KEY"];
-
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     updateserverIP(e) {
-        console.log("update called")
+        // console.log("update called")
         let prevState = this.state;
         prevState.serverIP = e.target.value;
+        this.setState(prevState);
+    }
+
+    updateserverPort(e) {
+        // console.log("update called")
+        let prevState = this.state;
+        prevState.serverPort = e.target.value;
         this.setState(prevState);
     }
 
@@ -74,11 +81,13 @@ export default class LocalSchemaMaker extends Component {
             data: JSON.stringify({
                 "schemaName": this.state.schemaName,
                 "serverIP": this.state.serverIP,
+                "serverPort": this.state.serverPort,
                 "serverUser": this.state.serverUser,
                 "serverPass": this.state.serverPass,
                 "dbName": this.state.dbName
             }),
-            url: "http://localhost:8000/mainApp/LocalSchema",
+            url : backend_url + "/mainApp/LocalSchema",
+            // url: "http://localhost:8000/mainApp/LocalSchema",
         }).then((res) => {
             console.log(res)
         });
@@ -102,6 +111,11 @@ export default class LocalSchemaMaker extends Component {
                     <Box>
                         <FormLabel >Server Ip </FormLabel >
                         <Input type="text" name="serverIP" value={this.state.serverIP || ""} onChange={e => this.updateserverIP(e)} />
+                    </Box>
+
+                    <Box>
+                        <FormLabel >Server Port </FormLabel >
+                        <Input type="text" name="serverIP" value={this.state.serverPort || ""} onChange={e => this.updateserverPort(e)} />
                     </Box>
 
                     <Box>
