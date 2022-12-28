@@ -13,22 +13,10 @@ services:
       - "8000:8000"
     networks:
       - app-network
-    # environment:
-    #   FRONTEND_URL: frontend
-    # depends_on:
-    #   - frontend
   database:
-    image: mysql/mysql-server
-    expose:
-      - 3306
+    build: ./database
     ports:
       - "6603:3306"
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 'qwerty'
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'pass'
     networks:
       - app-network
 
