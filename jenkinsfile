@@ -1,52 +1,53 @@
 pipeline {
     environment {
-    registry = "woolllff/DDBMS_APP" 
-    registryCredential = 'dockerhub_id' 
-    dockerImage = '' 
     }
     agent any
 
     stages {
-        stage('Checkout'){
-            steps{
+        stage('Checkout') {
+            steps {
                 git branch: 'master', changelog: false, credentialsId: 'github_id', poll: false, url: 'https://github.com/woolllff/Distributed_DBMS_Project'
             }
         }
-        stage('Build Docker'){
-            steps{
-                bat 'docker-compose build '
+        stage('Build Docker') {
+            steps {
+                // bat 'docker-compose build '
+
+                step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: true, cloud: '', dockerFileDirectory: './frontend', fromRegistry: [], noCache: true, pushCredentialsId: '', pushOnSuccess: false, tagsString: 'jenkinsBuild'])
+                step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: true, cloud: '', dockerFileDirectory: './database', fromRegistry: [], noCache: true, pushCredentialsId: '', pushOnSuccess: false, tagsString: 'jenkinsBuild'])
+                step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: true, cloud: '', dockerFileDirectory: './backend', fromRegistry: [], noCache: true, pushCredentialsId: '', pushOnSuccess: false, tagsString: 'jenkinsBuild'])
+
+            }
+
+        // step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose.yml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: true])
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                
             }
         }
-        // stage('Push Docker Image'){
-        //     steps{
-        //         script { 
-        //             docker.withRegistry( '', registryCredential ) {
-        //                 dockerImage.push()
-        //             }
-        //         } 
-        //     }
-        // }
-        // stage('Cleaning up') { 
-        //     steps { 
-        //         bat "docker rmi $registry:latest" 
+        // stage('Cleaning up') {
+        //     steps {
+        //         bat "docker rmi $registry:latest"
         //     }
         // }
 
-        // stage("Ansible Setup") {
-        //      steps {
-        //         dir('./ansible'){
-        //             script{
-        //                 def ansibleImage = docker.build("ansibleimage")
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Ansible Deploy')
-        // {
-        //     steps 
-        //         {
-        //           bat "docker run --name ansible ansibleimage:latest"    
-        //         }
-        // }
+    // stage("Ansible Setup") {
+    //      steps {
+    //         dir('./ansible'){
+    //             script{
+    //                 def ansibleImage = docker.build("ansibleimage")
+    //             }
+    //         }
+    //     }
+    // }
+    // stage('Ansible Deploy')
+    // {
+    //     steps
+    //         {
+    //           bat "docker run --name ansible ansibleimage:latest"
+    //         }
+    // }
     }
 }
